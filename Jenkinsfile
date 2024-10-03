@@ -1,10 +1,5 @@
 pipeline { 
-    agent any  --ou-- 
-    agent { 
-        node { 
-            label 'build' 
-        } 
-    } 
+    agent any 
     tools { 
         maven 'M2_HOME' 
     } 
