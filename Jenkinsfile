@@ -4,7 +4,7 @@ pipeline {
         maven 'M2_HOME' 
     } 
     options { 
-        --Timeout counter starts after agent is allocated-- 
+
         timeout(time: 1, unit: 'SECONDS') 
     } 
     environment { 
