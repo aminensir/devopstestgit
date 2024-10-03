@@ -15,6 +15,7 @@ pipeline {
             steps { 
                 git branch: 'master', 
                 url: 'https://github.com/aminensir/devopstestgit.git', 
+                 credentialsId:  '2e52c0ba-82e3-48de-8b4f-b603e27b386c' 
                
             } 
         } 
