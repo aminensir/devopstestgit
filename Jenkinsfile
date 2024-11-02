@@ -19,7 +19,7 @@ pipeline {
         stage('Code Build') { 
             steps { 
                  echo "Building the application "
-                 sh 'mvn build '  
+                 sh 'mvn package '  
             } 
         } 
          stage('Build image') { 
