@@ -4,9 +4,7 @@ pipeline {
         maven 'maven-3.9' 
     } 
    
-    environment { 
-        APP_ENV  = "DEV" 
-    } 
+   
     stages { 
         stage('Code Checkout') { 
             steps { 
