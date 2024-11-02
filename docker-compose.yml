@@ -10,7 +10,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/examinpi?useUnicode=true&useJDBCCompliantTimezoneShift=true&createDatabaseIfNotExist=true&useLegacyDatetimeCode=false&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: 
+      SPRING_DATASOURCE_PASSWORD: your_mysql_password
     depends_on:
       - db
     networks:
@@ -20,9 +20,17 @@ services:
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: your_mysql_password 
-      MYSQL_DATABASE: examini  
+      MYSQL_DATABASE: examinpi
     ports:
       - "3306:3306"
+    networks:
+      - app-network
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    ports:
+      - "8080:8080"
+      - "50000:50000" 
     networks:
       - app-network
 
