@@ -6,11 +6,11 @@ pipeline {
    
    
     stages { 
-        stage('Code Checkout') { 
+        stage('SonarQube') { 
             steps { 
-                git branch: 'Rawef-Messaoudi', 
-                url: 'https://github.com/aminensir/devopstestgit.git', 
-                 credentialsId:  'Github Credentials' 
+               withSonarQubeEnv(installationName:'sonarQube'){
+                sh ./mvnw clean sonar:sonar
+               }
                
             } 
         } 
