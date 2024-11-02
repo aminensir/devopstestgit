@@ -4,16 +4,8 @@ pipeline {
         maven 'maven-3.9' 
     } 
    
-   
     stages { 
-        stage('Code Checkout') { 
-            steps { 
-                git branch: 'Rawef-Messaoudi', 
-                url: 'https://github.com/aminensir/devopstestgit.git', 
-                 credentialsId:  'Github Credentials' 
-               
-            } 
-        } 
+       
         stage('Code Build') { 
             steps { 
                  echo "Building the application "
