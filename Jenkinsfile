@@ -15,7 +15,22 @@ pipeline {
             } 
         } 
 
-           stage('Push Artifact to Nexus') { 
+          
+
+        
+        
+         stage('Build image') { 
+            steps { 
+                 echo "Building the docker  image"
+                 withCredentials([usernamePassword(credentialsId:'DockerHubCredentials',passwordVariable:'PASS',usernameVariable:'USER')]) {
+
+                 sh 'docker build  -t rawef/rawefmessaoudi:jar-2.0 . '
+                 sh " echo $PASS | docker login -u $USER --password-stdin"
+                 sh 'docker push rawef/rawefmessaoudi:jar-1.0'
+                 }
+            } 
+        } 
+         stage('Push Artifact to Nexus') { 
             steps { 
                 echo "Pushing artifact to Nexus"
                 withCredentials([usernamePassword(credentialsId: 'nexus', passwordVariable: 'NEXUS_PASS', usernameVariable: 'NEXUS_USER')]) {
@@ -34,20 +49,6 @@ pipeline {
                 }
             } 
         }
-
-        
-        
-         stage('Build image') { 
-            steps { 
-                 echo "Building the docker  image"
-                 withCredentials([usernamePassword(credentialsId:'DockerHubCredentials',passwordVariable:'PASS',usernameVariable:'USER')]) {
-
-                 sh 'docker build  -t rawef/rawefmessaoudi:jar-2.0 . '
-                 sh " echo $PASS | docker login -u $USER --password-stdin"
-                 sh 'docker push rawef/rawefmessaoudi:jar-1.0'
-                 }
-            } 
-        } 
         stage('SonarQube') { 
             steps { 
                withSonarQubeEnv(installationName:'sonarQube'){
