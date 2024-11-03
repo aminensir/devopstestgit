@@ -39,7 +39,7 @@ pipeline {
                     mvn -X deploy:deploy-file\
                         -DgroupId=com.example \
                         -DartifactId=testEDITIONs \
-                        -Dversion=0.0.1-SNAPSHOT \
+                        -Dversion=0.0.1-20241103.143414-1 \
                         -Dpackaging=jar \
                         -Dfile=target/testEDITIONs-0.0.1-SNAPSHOT.jar \
                         -DrepositoryId=artifact  \
