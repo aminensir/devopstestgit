@@ -30,28 +30,28 @@ pipeline {
                  }
             } 
         } 
-         stage('Push Artifact to Nexus') { 
-            steps { 
-                echo "Pushing artifact to Nexus"
-                sh 'ls -l target/' 
-                withCredentials([usernamePassword(credentialsId: 'nexus', passwordVariable: 'NEXUS_PASS', usernameVariable: 'NEXUS_USER')]) {
-                    sh '''
-                    mvn -X deploy:deploy-file \
-                        -DgroupId=com.example \
-                        -DartifactId=testEDITIONs \
-                        -Dversion=0.0.1-SNAPSHOT \
-                        -Dpackaging=jar \
-                        -Dfile=target/testEDITIONs-0.0.1-SNAPSHOT.jar \
-                        -DrepositoryId=artifact  \
-                        -Durl=http://nexus:8081/repository/artifact/  \
-                        -Dusername=$NEXUS_USER \
-                        -Dpassword=$NEXUS_PASS \
-                        -DgeneratePom=true \
-                        -DskipValidation=true 
+            stage('Push Artifact to Nexus') { 
+                steps { 
+                    echo "Pushing artifact to Nexus"
+                    sh 'ls -l target/' 
+                    withCredentials([usernamePassword(credentialsId: 'nexus', passwordVariable: 'NEXUS_PASS', usernameVariable: 'NEXUS_USER')]) {
+                        sh '''
+                        mvn -X deploy:deploy-file \
+                            -DgroupId=com.example \
+                            -DartifactId=testEDITIONs \
+                            -Dversion=0.0.1-20241103.145111-1 \
+                            -Dpackaging=jar \
+                            -Dfile=target/testEDITIONs-0.0.1-SNAPSHOT.jar \
+                            -DrepositoryId=artifact  \
+                            -Durl=http://nexus:8081/repository/artifact/  \
+                            -Dusername=$NEXUS_USER \
+                            -Dpassword=$NEXUS_PASS \
+                            -DgeneratePom=true \
+                            -DskipValidation=true 
 
-                    '''
-                }
-            } 
+                        '''
+                    }
+                } 
         }
         stage('SonarQube') { 
             steps { 
