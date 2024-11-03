@@ -35,7 +35,7 @@ pipeline {
                 echo "Pushing artifact to Nexus"
                 withCredentials([usernamePassword(credentialsId: 'nexus', passwordVariable: 'NEXUS_PASS', usernameVariable: 'NEXUS_USER')]) {
                     sh '''
-                    mvn deploy:deploy-file \
+                    mvn -X deploy:deploy-file\
                         -DgroupId=com.example \
                         -DartifactId=testEDITIONs \
                         -Dversion=0.0.1-SNAPSHOT \
