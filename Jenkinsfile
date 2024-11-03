@@ -36,7 +36,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'nexus', passwordVariable: 'NEXUS_PASS', usernameVariable: 'NEXUS_USER')]) {
                     sh '''
                     mvn -X deploy:deploy-file\
-                        -DgroupId=com.example \
+                        -DgroupId=com.example.testeditions \
                         -DartifactId=testEDITIONs \
                         -Dversion=0.0.1-SNAPSHOT \
                         -Dpackaging=jar \
@@ -45,7 +45,6 @@ pipeline {
                         -Durl=http://nexus:8081/repository/artifact  \
                         -Dusername=$NEXUS_USER \
                         -Dpassword=$NEXUS_PASS \
-                        -DgeneratePom=true
 
                     '''
                 }
