@@ -14,7 +14,7 @@ services:
     depends_on:
       - db
     networks:
-      - iheb
+      - app-network
 
   db:
     image: mysql:8.0
@@ -24,7 +24,7 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - iheb
+      - app-network
 
   jenkins:
     image: jenkins/jenkins
@@ -32,7 +32,7 @@ services:
       - "8080:8080"
       - "5000:5000" 
     networks:
-      - iheb
+      - app-network
 
 networks:
   app-network:
