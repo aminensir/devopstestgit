@@ -6,6 +6,12 @@ pipeline {
    
    
     stages { 
+         stage('Code Compile') { 
+            steps { 
+                echo "Compiling the application"
+                sh 'mvn compile'  
+            } 
+        } 
         stage('SonarQube') { 
             steps { 
                withSonarQubeEnv(installationName:'sonarQube'){
