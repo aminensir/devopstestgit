@@ -9,7 +9,7 @@ pipeline {
          stage('Code Build') { 
             steps { 
                  echo "Building the application "
-                 sh 'mvn package ' 
+                 sh 'mvn clean package ' 
                  sh 'ls -R target || echo "No target directory found"' 
  
             } 
