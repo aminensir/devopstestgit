@@ -39,11 +39,11 @@ pipeline {
                     mvn -X deploy:deploy-file\
                         -DgroupId=com.example \
                         -DartifactId=testEDITIONs \
-                        -Dversion=0.0.1-20241103.143414-1 \
+                        -Dversion=0.0.1-SNAPSHOT \
                         -Dpackaging=jar \
                         -Dfile=target/testEDITIONs-0.0.1-SNAPSHOT.jar \
                         -DrepositoryId=artifact  \
-                        -Durl=http://nexus:8081/repository/artifact  \
+                        -Durl=http://nexus:8081/repository/artifact/  \
                         -Dusername=$NEXUS_USER \
                         -Dpassword=$NEXUS_PASS \
                         -DgeneratePom=true
