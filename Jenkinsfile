@@ -27,7 +27,7 @@ pipeline {
                         -Dpackaging=jar \
                         -Dfile=target/testEDITIONs-0.0.1-SNAPSHOT.jar \
                         -DrepositoryId=docker-hosted \
-                        -Durl=http://192.168.80.128:8083/repository/docker-hosted  
+                        -Durl=http://192.168.80.128:8081/repository/docker-hosted  
                         -Dusername=$NEXUS_USER \
                         -Dpassword=$NEXUS_PASS
                     '''
