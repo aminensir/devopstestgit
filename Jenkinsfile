@@ -15,14 +15,7 @@ pipeline {
             } 
         } 
         
-        stage('SonarQube') { 
-            steps { 
-               withSonarQubeEnv(installationName:'sonarQube'){
-                    sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:4.0.0.4121:sonar -Dsonar.host.url=http://sonarqube:9000 -Dsonar.java.binaries=target'
-               }
-               
-            } 
-        } 
+        
          stage('Build image') { 
             steps { 
                  echo "Building the docker  image"
@@ -33,6 +26,14 @@ pipeline {
                  sh " echo $PASS | docker login -u $USER --password-stdin"
                  sh 'docker push rawef/rawefmessaoudi:jar-1.0'
                  }
+            } 
+        } 
+        stage('SonarQube') { 
+            steps { 
+               withSonarQubeEnv(installationName:'sonarQube'){
+                    sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:4.0.0.4121:sonar -Dsonar.host.url=http://sonarqube:9000 -Dsonar.java.binaries=target'
+               }
+               
             } 
         } 
     } 
