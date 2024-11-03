@@ -6,24 +6,19 @@ pipeline {
    
    
     stages { 
-         stage('Code Compile') { 
+         stage('Code Build') { 
             steps { 
-                echo "Compiling the application"
-                sh 'mvn compile'  
+                 echo "Building the application "
+                 sh 'mvn package '  
             } 
         } 
+        
         stage('SonarQube') { 
             steps { 
                withSonarQubeEnv(installationName:'sonarQube'){
                     sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:4.0.0.4121:sonar -Dsonar.host.url=http://sonarqube:9000 -Dsonar.java.binaries=target/classes'
                }
                
-            } 
-        } 
-        stage('Code Build') { 
-            steps { 
-                 echo "Building the application "
-                 sh 'mvn package '  
             } 
         } 
          stage('Build image') { 
