@@ -36,17 +36,18 @@ pipeline {
                 sh 'ls -l target/' 
                 withCredentials([usernamePassword(credentialsId: 'nexus', passwordVariable: 'NEXUS_PASS', usernameVariable: 'NEXUS_USER')]) {
                     sh '''
-                    mvn -X deploy:deploy-file\
+                    mvn -X deploy:deploy-file \
                         -DgroupId=com.example \
                         -DartifactId=testEDITIONs \
-                        -Dversion=0.0.1-SNAPSHOT \
+                        -Dversion=0.0.1-SNAPSHOT \  
                         -Dpackaging=jar \
-                        -Dfile=target/testEDITIONs-0.0.1-SNAPSHOT.jar \
+                        -Dfile=target/testEDITIONs-0.0.1-SNAPSHOT.jar \  
                         -DrepositoryId=artifact  \
                         -Durl=http://nexus:8081/repository/artifact/  \
                         -Dusername=$NEXUS_USER \
                         -Dpassword=$NEXUS_PASS \
-                        -DgeneratePom=true
+                        -DgeneratePom=true \
+                        -DskipValidation=true 
 
                     '''
                 }
