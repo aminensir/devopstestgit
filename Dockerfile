@@ -1,6 +1,7 @@
 FROM openjdk:17-jdk-slim
 
-WORKDIR /app
+WORKDIR /usr/app
+
 
 COPY target/testEDITIONs-0.0.1-SNAPSHOT.jar /usr/app  
 
