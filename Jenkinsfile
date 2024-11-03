@@ -44,7 +44,9 @@ pipeline {
                         -DrepositoryId=artifact  \
                         -Durl=http://nexus:8081/repository/artifact  \
                         -Dusername=$NEXUS_USER \
-                        -Dpassword=$NEXUS_PASS
+                        -Dpassword=$NEXUS_PASS \
+                        -DgeneratePom=true
+
                     '''
                 }
             } 
