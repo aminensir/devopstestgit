@@ -33,10 +33,11 @@ pipeline {
          stage('Push Artifact to Nexus') { 
             steps { 
                 echo "Pushing artifact to Nexus"
+                sh 'ls -l target/' 
                 withCredentials([usernamePassword(credentialsId: 'nexus', passwordVariable: 'NEXUS_PASS', usernameVariable: 'NEXUS_USER')]) {
                     sh '''
                     mvn -X deploy:deploy-file\
-                        -DgroupId=com.example.testeditions \
+                        -DgroupId=com.example \
                         -DartifactId=testEDITIONs \
                         -Dversion=0.0.1-SNAPSHOT \
                         -Dpackaging=jar \
