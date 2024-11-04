@@ -22,15 +22,7 @@ services:
       MYSQL_ROOT_PASSWORD: 
       MYSQL_DATABASE: examinpi
     ports:
-      - "3306:3306"
-    networks:
-      - app-network
-
-  jenkins:
-    image: jenkins/jenkins
-    ports:
-      - "8080:8080"
-      - "5000:5000" 
+      - "3307:3307"
     networks:
       - app-network
 
