@@ -1,17 +1,15 @@
-version: '3.8'
-
 services:
   mysql:
     image: mysql:5.7
     environment:
-      MYSQL_ROOT_PASSWORD: root           # Set root password for MySQL
-      MYSQL_DATABASE: examinpi             # Create database on startup
-      MYSQL_USER: root                     # Create user with specified username
-      MYSQL_PASSWORD: root                 # Set password for created user
+      MYSQL_ROOT_PASSWORD: root          
+      MYSQL_DATABASE: examinpi             
+      MYSQL_USER: root                    
+      MYSQL_PASSWORD: root                 
     ports:
-      - "3306:3306"                        # Expose MySQL port
+      - "3306:3306"                        
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]  # Healthcheck for MySQL
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]  
       interval: 10s
       timeout: 5s
       retries: 5
@@ -19,13 +17,13 @@ services:
   app:
     build:
       context: . 
-      dockerfile: Dockerfile               # Specify the Dockerfile for the application
+      dockerfile: Dockerfile               
     ports:
-      - "8089:8089"                        # Expose application port
+      - "8089:8089"                        
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/examinpi?useUnicode=true&useJDBCCompliantTimezoneShift=true&createDatabaseIfNotExist=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-      SPRING_DATASOURCE_USERNAME: root     # Username for MySQL connection
-      SPRING_DATASOURCE_PASSWORD: root      # Password for MySQL connection
+      SPRING_DATASOURCE_USERNAME: root     
+      SPRING_DATASOURCE_PASSWORD: root      
     depends_on:
       mysql:
-        condition: service_healthy          # Ensure MySQL is healthy before starting the app
+        condition: service_healthy          
