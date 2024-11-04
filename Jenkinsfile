@@ -38,6 +38,7 @@ pipeline {
         stage('Run Docker Compose') {
             steps {
                 echo "Starting application and MySQL using Docker Compose"
+                sh 'docker-compose down --remove-orphans'
                 sh 'docker-compose up -d --build'
 
             }
