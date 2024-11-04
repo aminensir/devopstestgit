@@ -6,7 +6,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: examinpi
-      MYSQL_USER: guest  
+      MYSQL_USER: root  
       MYSQL_PASSWORD: ""
     ports:
       - "3306:3306"
@@ -24,7 +24,7 @@ services:
       - "8089:8089" 
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/examinpi?useUnicode=true&useJDBCCompliantTimezoneShift=true&createDatabaseIfNotExist=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-      SPRING_DATASOURCE_USERNAME: guest  
+      SPRING_DATASOURCE_USERNAME: root  
       SPRING_DATASOURCE_PASSWORD: ""
     depends_on:
       mysql:
