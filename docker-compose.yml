@@ -1,29 +1,30 @@
+version: '3.8'
+
 services:
   mysql:
     image: mysql:5.7
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root          
-      MYSQL_DATABASE: examinpi             
-      MYSQL_USER: root                    
-      MYSQL_PASSWORD: root                 
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: examnpi
     ports:
-      - "3306:3306"                        
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]  
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
 
   app:
     build:
-      context: . 
-      dockerfile: Dockerfile               
+      context: .
+      dockerfile: Dockerfile
+    restart: always
     ports:
-      - "8089:8089"                        
+      - "8089:8089"
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/examinpi?useUnicode=true&useJDBCCompliantTimezoneShift=true&createDatabaseIfNotExist=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-      SPRING_DATASOURCE_USERNAME: root     
-      SPRING_DATASOURCE_PASSWORD: root      
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 
     depends_on:
-      mysql:
-        condition: service_healthy          
+      - mysql
+
+volumes:
+  mysql_data:
