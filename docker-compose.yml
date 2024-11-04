@@ -10,8 +10,12 @@ services:
       MYSQL_USER: root  
       MYSQL_PASSWORD: ""
     ports:
-      - "3306:3306"
-    
+      - "3307:3307"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   app:
     build:
@@ -20,7 +24,9 @@ services:
     ports:
       - "8089:8089" 
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/examinpi?useUnicode=true&useJDBCCompliantTimezoneShift=true&createDatabaseIfNotExist=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3307/examinpi?useUnicode=true&useJDBCCompliantTimezoneShift=true&createDatabaseIfNotExist=true&useLegacyDatetimeCode=false&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root  
-   
+    depends_on:
+      mysql:
+        condition: service_healthy
