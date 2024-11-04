@@ -30,8 +30,8 @@ pipeline {
                  withCredentials([usernamePassword(credentialsId:'DockerHubCredentials',passwordVariable:'PASS',usernameVariable:'USER')]) {
 
                  sh 'docker build  -t rawef/rawefmessaoudi:jar-2.0 . '
-                 sh " echo $PASS | docker login -u $USER --password-stdin"
-                 sh 'docker push rawef/rawefmessaoudi:jar-1.0'
+                //  sh " echo $PASS | docker login -u $USER --password-stdin"
+                //  sh 'docker push rawef/rawefmessaoudi:jar-1.0'
                  }
             } 
         } 
@@ -39,7 +39,7 @@ pipeline {
             steps {
                 echo "Starting application and MySQL using Docker Compose"
 
-                sh 'docker-compose up -d --build'
+                sh 'docker-compose up -d '
 
             }
         }
