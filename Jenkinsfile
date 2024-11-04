@@ -7,14 +7,14 @@ pipeline {
      
    
     stages { 
-        stage('SonarQube') { 
-            steps { 
-               withSonarQubeEnv(installationName:'sonarQube'){
-                    sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:4.0.0.4121:sonar -Dsonar.host.url=http://sonarqube:9000 -Dsonar.java.binaries=target'
-               }
+        // stage('SonarQube') { 
+        //     steps { 
+        //        withSonarQubeEnv(installationName:'sonarQube'){
+        //             sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:4.0.0.4121:sonar -Dsonar.host.url=http://sonarqube:9000 -Dsonar.java.binaries=target'
+        //        }
                
-            } 
-        } 
+        //     } 
+        // } 
          stage('Code Build') { 
             steps { 
                  echo "Building the application "
@@ -35,6 +35,12 @@ pipeline {
                  }
             } 
         } 
+        stage('Run Docker Compose') {
+            steps {
+                echo "Starting application and MySQL using Docker Compose"
+                sh 'docker-compose up -d --build'
+            }
+        }
             stage('Push Artifact to Nexus') { 
                 steps { 
                     echo "Pushing artifact to Nexus"
@@ -53,7 +59,7 @@ pipeline {
                             '''
                     }
                 } 
-        }
+            }
       
     } 
       
