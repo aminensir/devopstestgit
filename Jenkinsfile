@@ -39,6 +39,8 @@ pipeline {
             steps {
                 echo "Starting application and MySQL using Docker Compose"
                 sh 'docker-compose up -d --build'
+                sh 'sleep 60' 
+
             }
         }
             // stage('Push Artifact to Nexus') { 
