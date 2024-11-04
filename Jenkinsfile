@@ -37,6 +37,8 @@ pipeline {
         } 
         stage('Run Docker Compose') {
             steps {
+                echo "Stopping and removing old containers"
+                sh 'docker-compose down'
                 echo "Starting application and MySQL using Docker Compose"
                 sh 'docker-compose up -d --build'
 
