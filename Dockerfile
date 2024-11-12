@@ -1,6 +1,8 @@
-
 FROM openjdk:17-jdk-slim
-VOLUME /tmp
-ARG JAR_FILE=target/your-spring-app.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+
+WORKDIR /app
+
+COPY target/testEDITIONs-0.0.1-SNAPSHOT.jar /app
+EXPOSE 8089
+
+CMD ["java", "-jar", "testEDITIONs-0.0.1-SNAPSHOT.jar"]
