@@ -26,13 +26,7 @@ services:
     networks:
       - app-network
 
-  jenkins:
-    image: jenkins/jenkins
-    ports:
-      - "8080:8080"
-      - "5000:5000" 
-    networks:
-      - app-network
+  
 
 networks:
   app-network:
