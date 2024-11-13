@@ -15,7 +15,7 @@ pipeline {
                  sh 'mvn package' 
             } 
         } 
-        stage('SonarQube') { 
+   /*     stage('SonarQube') { 
               steps { 
                  withSonarQubeEnv(installationName:'sonarQube'){
                      sh'chmod +x mvnw'
@@ -23,7 +23,18 @@ pipeline {
                 }
                
              } 
-          } 
+          } */
+        stage('Build image') { 
+            steps { 
+                 echo "Building the docker  image"
+                 withCredentials([usernamePassword(credentialsId:'DockerHubCredentials',passwordVariable:'PASS',usernameVariable:'USER')]) {
+
+                 sh 'docker build  -t hoossem7/houssemkhedhri-5se1-g3:jar-2.0 . '
+                   sh " echo $PASS | docker login -u $USER --password-stdin"
+                   sh 'docker push hoossem7/houssemkhedhri-5se1-g3:jar-2.0'
+                 }
+            } 
+        } 
     } 
        post { 
           always {                                                              
