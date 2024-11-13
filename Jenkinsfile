@@ -3,10 +3,7 @@ pipeline {
     tools { 
         maven 'M2_HOME' 
     } 
-    options { 
-
-        timeout(time: 1, unit: 'SECONDS') 
-    } 
+    
     environment { 
         APP_ENV  = "DEV" 
     } 
