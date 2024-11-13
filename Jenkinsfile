@@ -11,19 +11,21 @@ pipeline {
         APP_ENV  = "DEV" 
     } 
     stages { 
-        stage('Code Checkout') { 
-            steps { 
-                git branch: 'master', 
-                url: 'https://github.com/aminensir/devopstestgit.git', 
-                 credentialsId:  '2e52c0ba-82e3-48de-8b4f-b603e27b386c' 
-               
-            } 
-        } 
+         
+         
         stage('Code Build') { 
             steps { 
-                 sh 'mvn install -Dmaven.test.skip=true' 
+                 sh 'mvn package' 
             } 
         } 
+        stage('SonarQube') { 
+              steps { 
+                 withSonarQubeEnv(installationName:'sonarQube'){
+                      sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:4.0.0.4121:sonar -Dsonar.host.url=http://sonarqube:9000 -Dsonar.java.binaries=target'
+                }
+               
+             } 
+          } 
     } 
        post { 
           always {                                                              
