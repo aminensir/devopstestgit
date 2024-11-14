@@ -1,3 +1,5 @@
+#!/usr/bin/env groovy
+@Library('jenkins-shared-library')_
 pipeline { 
     agent any 
     tools { 
@@ -16,8 +18,9 @@ pipeline {
           } 
          stage('Code Build') { 
             steps { 
-                 echo "Building the application "
-                 sh 'mvn clean package ' 
+                script{
+                     buildJar() 
+                }
  
             } 
         } 
@@ -25,12 +28,8 @@ pipeline {
         
          stage('Build image') { 
             steps { 
-                 echo "Building the docker  image"
-                 withCredentials([usernamePassword(credentialsId:'DockerHubCredentials',passwordVariable:'PASS',usernameVariable:'USER')]) {
-
-                 sh 'docker build  -t rawef/rawefmessaoudi:jar-2.0 . '
-                  // sh " echo $PASS | docker login -u $USER --password-stdin"
-                   //sh 'docker push rawef/rawefmessaoudi:jar-2.0'
+                 script{
+                     buildImage()
                  }
             } 
         } 
@@ -43,20 +42,8 @@ pipeline {
         }
               stage('Push Artifact to Nexus') { 
                   steps { 
-                      echo "Pushing artifact to Nexus"
-                      withCredentials([usernamePassword(credentialsId: 'nexus', passwordVariable: 'NEXUS_PASS', usernameVariable: 'NEXUS_USER')]) {
-                           sh '''
-                                  mvn deploy:deploy-file \
-                                      -DgroupId=com.example \
-                                      -DartifactId=testEDITIONs \
-                                       -Dversion=0.0.1 \
-                                      -Dpackaging=jar \
-                                      -Dfile=target/testEDITIONs-0.0.1-SNAPSHOT.jar \
-                                      -DrepositoryId=maven-releases \
-                                      -Durl=http://nexus:8081/repository/maven-releases/ \
-                                      -Dusername=$NEXUS_USER \
-                                      -Dpassword=$NEXUS_PASS
-                              '''
+                      script{
+                          nexusPush()
                       }
                   } 
               }
