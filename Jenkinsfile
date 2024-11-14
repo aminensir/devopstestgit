@@ -15,7 +15,7 @@ pipeline {
                  sh 'mvn package' 
             } 
         } 
-   /*     stage('SonarQube') { 
+        stage('SonarQube') { 
               steps { 
                  withSonarQubeEnv(installationName:'sonarQube'){
                      sh'chmod +x mvnw'
@@ -23,8 +23,8 @@ pipeline {
                 }
                
              } 
-          } */
-        stage('Build image') { 
+          } 
+  /*      stage('Build image') { 
             steps { 
                  echo "Building the docker  image"
                  withCredentials([usernamePassword(credentialsId:'DockerHubCredentials',passwordVariable:'PASS',usernameVariable:'USER')]) {
@@ -53,7 +53,7 @@ pipeline {
                               '''
                       }
                   } 
-              }
+              } */
     } 
        post { 
           always {                                                              
