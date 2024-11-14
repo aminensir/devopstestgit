@@ -72,7 +72,7 @@ pipeline {
                             withCredentials([usernamePassword(credentialsId:'DockerHubCredentials',passwordVariable:'PASS',usernameVariable:'USER')]) {
                                 sh 'git config --global user.email "jenkins@exemple.com" '
                                 sh 'git config --global user.name "jenkins" '
-                                sh "git remove set-url origin https://${USER}:${PASS}@github.com/aminensir/devopstestgit.git
+                                sh "git remove set-url origin https://${USER}:${PASS}@github.com/aminensir/devopstestgit.git"
                                 sh 'git add .'
                                 sh 'git commit -m "version update"'
                                 sh'git push origin HEAD:Rawef-Messaoudi-5se1-G3'
