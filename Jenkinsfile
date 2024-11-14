@@ -28,15 +28,17 @@ stage('Run Unit Tests') {
             }
         }
         
- stage('SonarQube') { 
-              steps { 
-                 withSonarQubeEnv(installationName:'sonarQube'){
-                     sh'chmod +x mvnw'
-                      sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:4.0.0.4121:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.java.binaries=target'
+stage('SonarQube') { 
+            steps { 
+                withCredentials([string(credentialsId: 'SonarQubeToken', variable: 'SONAR_TOKEN')]) {
+                    withSonarQubeEnv('sonarQube') {
+                        sh 'chmod +x mvnw'
+                        sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:4.0.0.4121:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=$SONAR_TOKEN'
+                    }
                 }
-               
-             } 
-          } 
+            } 
+        }
+    } 
 
        stage('Build image') { 
             steps { 
