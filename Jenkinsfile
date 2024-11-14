@@ -16,6 +16,15 @@ pipeline {
                
              } 
           } 
+          stage('install dependencies') { 
+            steps { 
+                script{
+                     sh'mvn install'
+                }
+ 
+            } 
+        }
+        
           stage('Increment Version') {
                 steps {
                     script {
@@ -36,14 +45,14 @@ pipeline {
                 }
             }
 
-         stage('Code Build') { 
+          stage('Code Build') { 
             steps { 
                 script{
                      buildJar() 
                 }
  
             } 
-        } 
+        }
      
         
          stage('Build image') { 
