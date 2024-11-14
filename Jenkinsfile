@@ -16,34 +16,9 @@ pipeline {
                
              } 
           } 
-          stage('install dependencies') { 
-            steps { 
-                script{
-                     sh'mvn install'
-                }
- 
-            } 
-        }
+         
         
-          stage('Increment Version') {
-                steps {
-                    script {
-                        echo 'Incrementing app version'
-
-                        sh """
-                            mvn build-helper:parse-version version:set \
-                            -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
-                            version:commit
-                        """
-            
-                        def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
-                        def version = matcher[0][1]
-                        echo "New version extracted from pom.xml: ${version}"
-            
-                        env.IMAGE_NAME = "app-${version}-${BUILD_NUMBER}"
-                    }
-                }
-            }
+          
 
           stage('Code Build') { 
             steps { 
