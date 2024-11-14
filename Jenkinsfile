@@ -63,7 +63,7 @@ stage('Run Unit Tests') {
                                       -Dpackaging=jar \
                                       -Dfile=target/testEDITIONs-0.0.1-SNAPSHOT.jar \
                                       -DrepositoryId=maven-releases \
-                                      -Durl=http://192.168.13.128:8081/repository/maven-releases/ \
+                                      -Durl=http://192.168.91.128:8081/repository/maven-releases/\
                                       -Dusername=$NEXUS_USER \
                                       -Dpassword=$NEXUS_PASS
                               '''
