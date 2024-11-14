@@ -20,7 +20,6 @@ pipeline {
                 steps {
                     script {
                         echo 'Incrementing app version'
-                        sh'mvn clean install'
 
                         sh """
                             mvn build-helper:parse-version version:set \
