@@ -62,5 +62,17 @@ pipeline {
               }
       
     } 
+      post {
+        success {
+            mail to: 'rawef31@gmail.com',
+                 subject: "Jenkins Pipeline Success: ${currentBuild.fullDisplayName}",
+                 body: "The Jenkins pipeline for project co&co has completed successfully."
+        }
+        failure {
+            mail to: 'rawef31@gmail.com',
+                 subject: "Jenkins Pipeline Failure: ${currentBuild.fullDisplayName}",
+                 body: "The Jenkins pipeline for project co&co has failed. Please check the logs for details."
+        }
+    }
       
     }
