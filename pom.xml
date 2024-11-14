@@ -166,7 +166,15 @@
                     </goals>
                 </execution>
             </executions>
-        </plugin>     
+        </plugin> 
+                  <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-release-plugin</artifactId>
+            <version>3.0.0-M1</version> <!-- or the latest stable version -->
+            <configuration>
+                <autoVersionSubmodules>false</autoVersionSubmodules>
+            </configuration>
+        </plugin>
         </plugins>
     </build>
 
