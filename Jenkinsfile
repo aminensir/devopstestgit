@@ -22,7 +22,7 @@ pipeline {
                         echo 'Incrementing app version'
                         sh """
                             mvn build-helper:parse-version version:set \
-                            -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion} \
+                            -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
                             version:commit
                         """
             
