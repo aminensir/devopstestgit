@@ -18,7 +18,7 @@ pipeline {
 stage('Run Unit Tests') {
             steps {
                 echo "Running JUnit tests with Maven"
-                sh 'mvn test'  // Exécute les tests unitaires (JUnit/Mockito)
+                sh 'mvn test'  // 
             }
         }
         
@@ -43,7 +43,7 @@ stage('Run Unit Tests') {
                  }
             } 
         } 
-        stage('Push Artifact to Nexus') { 
+        stage('Nexus') { 
                   steps { 
                       echo "Pushing artifact to Nexus"
                       withCredentials([usernamePassword(credentialsId: 'nexus', passwordVariable: 'NEXUS_PASS', usernameVariable: 'NEXUS_USER')]) {
