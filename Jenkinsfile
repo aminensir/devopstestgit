@@ -8,7 +8,12 @@ pipeline {
         APP_ENV  = "DEV" 
     } 
     stages { 
-         
+         stage('Clean Workspace') { 
+            steps { 
+                echo "Cleaning workspace"
+                sh 'mvn clean'
+            }
+        }  
          
         stage('Code Build') { 
             steps { 
