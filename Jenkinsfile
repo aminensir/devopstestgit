@@ -15,18 +15,17 @@ pipeline {
                  sh 'mvn package' 
             } 
         } 
-       stage('SonarQube') {
-    steps {
-        withSonarQubeEnv(installationName: 'SonarQube') {
-            withCredentials([usernamePassword(credentialsId: 'sonarQube', usernameVariable: 'SONAR_USER', passwordVariable: 'SONAR_PASS')]) {
-                sh 'chmod +x mvnw'
-                sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:4.0.0.4121:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=$SONAR_USER -Dsonar.password=$SONAR_PASS -Dsonar.java.binaries=target'
-            }
-        }
-    }
-}
+/* stage('SonarQube') { 
+              steps { 
+                 withSonarQubeEnv(installationName:'sonarQube'){
+                     sh'chmod +x mvnw'
+                      sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:4.0.0.4121:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.java.binaries=target'
+                }
+               
+             } 
+          } */
 
-  /*      stage('Build image') { 
+       stage('Build image') { 
             steps { 
                  echo "Building the docker  image"
                  withCredentials([usernamePassword(credentialsId:'DockerHubCredentials',passwordVariable:'PASS',usernameVariable:'USER')]) {
@@ -37,7 +36,7 @@ pipeline {
                  }
             } 
         } 
-        stage('Push Artifact to Nexus') { 
+   /*     stage('Push Artifact to Nexus') { 
                   steps { 
                       echo "Pushing artifact to Nexus"
                       withCredentials([usernamePassword(credentialsId: 'nexus', passwordVariable: 'NEXUS_PASS', usernameVariable: 'NEXUS_USER')]) {
