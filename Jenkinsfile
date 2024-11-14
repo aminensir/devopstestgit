@@ -27,7 +27,7 @@ pipeline {
                             
 
 
-                    def matcher = readFile('pom.xml') =~ /<version>(.+)<\/version>/
+                    def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
                     def version = matcher[0][1]
                     echo "New version extracted from pom.xml: ${version}"
 
