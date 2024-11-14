@@ -15,6 +15,13 @@ pipeline {
                  sh 'mvn package' 
             } 
         } 
+stage('Run Unit Tests') {
+            steps {
+                echo "Running JUnit tests with Maven"
+                sh 'mvn test'  // Exécute les tests unitaires (JUnit/Mockito)
+            }
+        }
+        
  stage('SonarQube') { 
               steps { 
                  withSonarQubeEnv(installationName:'sonarQube'){
