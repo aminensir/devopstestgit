@@ -15,12 +15,7 @@ pipeline {
             }
         }  
          
-        stage('Code Build') { 
-            steps { 
-                 echo "Building the code package"
-                 sh 'mvn package' 
-            } 
-        } 
+       
 stage('Run Unit Tests') {
             steps {
                 echo "Running JUnit tests with Maven"
@@ -38,7 +33,13 @@ stage('Run Unit Tests') {
              } 
           } 
      
-
+ stage('Code Build') { 
+            steps { 
+                 echo "Building the code package"
+                 sh 'mvn package' 
+            } 
+        } 
+        
        stage('Build image') { 
             steps { 
                  echo "Building the docker  image"
