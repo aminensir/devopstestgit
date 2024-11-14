@@ -38,7 +38,7 @@ stage('SonarQube') {
                 }
             } 
         }
-    } 
+     
 
        stage('Build image') { 
             steps { 
