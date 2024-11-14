@@ -15,7 +15,7 @@ pipeline {
                  sh 'mvn package' 
             } 
         } 
-/* stage('SonarQube') { 
+ stage('SonarQube') { 
               steps { 
                  withSonarQubeEnv(installationName:'sonarQube'){
                      sh'chmod +x mvnw'
@@ -23,7 +23,7 @@ pipeline {
                 }
                
              } 
-          } */
+          } 
 
        stage('Build image') { 
             steps { 
@@ -36,7 +36,7 @@ pipeline {
                  }
             } 
         } 
-   /*     stage('Push Artifact to Nexus') { 
+        stage('Push Artifact to Nexus') { 
                   steps { 
                       echo "Pushing artifact to Nexus"
                       withCredentials([usernamePassword(credentialsId: 'nexus', passwordVariable: 'NEXUS_PASS', usernameVariable: 'NEXUS_USER')]) {
@@ -54,7 +54,7 @@ pipeline {
                               '''
                       }
                   } 
-              } */
+              } 
     } 
        post { 
           always {                                                              
