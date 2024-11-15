@@ -19,7 +19,7 @@ pipeline {
 stage('Run Unit Tests') {
             steps {
                 echo "Running JUnit tests with Maven"
-                sh 'mvn test'  // 
+                sh 'mvn test'   
             }
         }
         
@@ -46,8 +46,8 @@ stage('Run Unit Tests') {
                  withCredentials([usernamePassword(credentialsId:'DockerHubCredentials',passwordVariable:'PASS',usernameVariable:'USER')]) {
 
                  sh 'docker build  -t hoossem7/houssemkhedhri-5se1-g3:jar-2.0 . '
-                 //  sh " echo $PASS | docker login -u $USER --password-stdin"
-                  // sh 'docker push hoossem7/houssemkhedhri-5se1-g3:jar-2.0'
+                   sh " echo $PASS | docker login -u $USER --password-stdin"
+                   sh 'docker push hoossem7/houssemkhedhri-5se1-g3:jar-2.0'
                  }
             } 
         } 
