@@ -18,6 +18,10 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
+<properties>
+    <sonar.java.binaries>${project.build.directory}/classes</sonar.java.binaries>
+</properties>
+
 
     <dependencies>
         <dependency>
