@@ -1,10 +1,10 @@
 package com.example.testeditions;
 
-import com.example.testeditions.Repositories.UserRepository;
-import com.example.testeditions.Services.PostServiceImpl;
-import com.example.testeditions.Entites.Post;
+import com.example.testeditions.Entites.Reclamation;
 import com.example.testeditions.Entites.User;
-import com.example.testeditions.Repositories.PostRepository;
+import com.example.testeditions.Repositories.ReclamationRepository;
+import com.example.testeditions.Repositories.UserRepository;
+import com.example.testeditions.Services.ReclamationImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,7 +14,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
@@ -23,60 +22,116 @@ import static org.mockito.Mockito.*;
 class TestEditioNsApplicationTests {
 
     @Mock
-    PostRepository postRepository;
+    private ReclamationRepository reclamationRepository;
 
     @Mock
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @InjectMocks
-    PostServiceImpl postService;
-
-    // Example Post instance used across tests
-    Post post = new Post(1L, "Description du post", new Date(), new User(), null, null);
+    private ReclamationImpl reclamationService;
 
     @Test
-    public void getAllPosts() {
-        when(postRepository.findAll()).thenReturn(Arrays.asList(post));
+    void testSaveReclamation() {
+        Reclamation reclamation = new Reclamation();
+        reclamation.setId_reclamation(1);
+        reclamation.setCategorie_reclamation("Category 1");
 
-        var posts = postService.getAllPosts();
+        when(reclamationRepository.save(Mockito.any(Reclamation.class))).thenReturn(reclamation);
 
-        Assertions.assertNotNull(posts);
-        Assertions.assertEquals(1, posts.size());
-        Assertions.assertEquals("Description du post", posts.get(0).getDescriptionPost());
+        Reclamation savedReclamation = reclamationService.save(reclamation);
+
+        Assertions.assertNotNull(savedReclamation);
+        Assertions.assertEquals(1, savedReclamation.getId_reclamation());
     }
 
     @Test
-    public void getPostById() {
-        when(postRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(post));
+    void testDeleteReclamation() {
+        doNothing().when(reclamationRepository).deleteById(1);
 
-        Post retrievedPost = postService.getPostById(1L);
+        reclamationService.delete(1);
 
-        Assertions.assertNotNull(retrievedPost);
-        Assertions.assertEquals("Description du post", retrievedPost.getDescriptionPost());
+        verify(reclamationRepository, times(1)).deleteById(1);
     }
 
     @Test
-    public void createPost() {
-        when(postRepository.save(Mockito.any(Post.class))).thenReturn(post);
+    void testUpdateReclamation() {
+        Reclamation existingReclamation = new Reclamation();
+        existingReclamation.setId_reclamation(1);
+        existingReclamation.setCategorie_reclamation("Old Category");
 
-        Post createdPost = postService.createPost(post);
+        Reclamation updatedReclamation = new Reclamation();
+        updatedReclamation.setId_reclamation(1);
+        updatedReclamation.setCategorie_reclamation("Updated Category");
 
-        Assertions.assertNotNull(createdPost);
-        Assertions.assertEquals("Description du post", createdPost.getDescriptionPost());
+        when(reclamationRepository.findById(1)).thenReturn(Optional.of(existingReclamation));
+        when(reclamationRepository.save(Mockito.any(Reclamation.class))).thenReturn(updatedReclamation);
+
+        Reclamation result = reclamationService.update(updatedReclamation);
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals("Updated Category", result.getCategorie_reclamation());
     }
 
     @Test
-    public void getAveragePostsPerUser() {
-        User user1 = new User();
-        user1.setId(1L);
-        User user2 = new User();
-        user2.setId(2L);
+    void testAddReclamationAndAssignToUser() {
+        User user = new User();
+        user.setId(1L);
 
-        when(userRepository.findAll()).thenReturn(Arrays.asList(user1, user2));
-        when(postRepository.count()).thenReturn(4L);
+        Reclamation reclamation = new Reclamation();
+        reclamation.setId_reclamation(1);
 
-        double average = postService.getAveragePostsPerUser();
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(reclamationRepository.save(Mockito.any(Reclamation.class))).thenReturn(reclamation);
 
-        Assertions.assertEquals(2.0, average);
+        Reclamation savedReclamation = reclamationService.addReclamationAndAssignToUser(reclamation, 1L);
+
+        Assertions.assertNotNull(savedReclamation);
+        Assertions.assertEquals(1, savedReclamation.getId_reclamation());
+        verify(reclamationRepository, times(1)).save(reclamation);
+    }
+
+    @Test
+    void testGetReclamationsByUserId() {
+        Reclamation reclamation1 = new Reclamation();
+        reclamation1.setId_reclamation(1);
+
+        Reclamation reclamation2 = new Reclamation();
+        reclamation2.setId_reclamation(2);
+
+        when(reclamationRepository.findByUserId(1L)).thenReturn(Arrays.asList(reclamation1, reclamation2));
+
+        var reclamations = reclamationService.getReclamationsByUserId(1L);
+
+        Assertions.assertNotNull(reclamations);
+        Assertions.assertEquals(2, reclamations.size());
+    }
+
+    @Test
+    void testGetReclamationById() {
+        Reclamation reclamation = new Reclamation();
+        reclamation.setId_reclamation(1);
+
+        when(reclamationRepository.findById(1)).thenReturn(Optional.of(reclamation));
+
+        Reclamation result = reclamationService.getReclamationById(1);
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(1, result.getId_reclamation());
+    }
+
+    @Test
+    void testUpdateReclamationState() {
+        Reclamation existingReclamation = new Reclamation();
+        existingReclamation.setId_reclamation(1);
+        existingReclamation.setEtat_reclamation(0);
+
+        when(reclamationRepository.findById(1)).thenReturn(Optional.of(existingReclamation));
+        when(reclamationRepository.save(Mockito.any(Reclamation.class))).thenReturn(existingReclamation);
+
+        Reclamation result = reclamationService.updateReclamationState(1);
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(1, result.getEtat_reclamation());
+        verify(reclamationRepository, times(1)).save(existingReclamation);
     }
 }
