@@ -19,14 +19,14 @@ pipeline {
          
         
           
-          stage('test') { 
-            steps { 
-                script{
+          //stage('test') { 
+            //steps { 
+              //  script{
                    //  sh 'mvn test'
-                }
+                //}
  
-            } 
-        }
+            //} 
+        //}
 
           stage('Code Build') { 
             steps { 
